@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SG TOURNAMENT #2 | CS2 Teams</title>
+
+  <link rel="icon" href="https://cdn.discordapp.com/attachments/900998594583207957/1478761428453425162/Picsart_26-03-04_19-29-44-302.png?ex=69a99366&is=69a841e6&hm=04ebd55ae03061aecc8b4f502b9f2e27ca9cc0c0b36a897c0a9a0577cb196d1d&" type="image/png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <style>
+    /* ===== Base ===== */
+    :root{
+      --base-accent:#38bdf8;
+      --base-accent-rgb:56 189 248;
+    }
+
+    body{
+      background: radial-gradient(circle at top center, #0a192f 0%, #000000 100%);
+      background-attachment: fixed;
+    }
+
+    .blue-glow{ text-shadow: 0 0 15px rgba(var(--base-accent-rgb) / 0.55); }
+
+    /* Cards */
+    .player-card{
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: border-color .5s ease, box-shadow .5s ease, transform .5s ease;
+    }
+
+    .stat-badge{
+      background: rgba(255,255,255,0.02);
+      border-radius: 10px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar{ width: 10px; }
+    ::-webkit-scrollbar-track{ background: rgba(255,255,255,0.03); }
+    ::-webkit-scrollbar-thumb{
+      background: rgba(var(--base-accent-rgb) / 0.35);
+      border-radius: 999px;
+      border: 2px solid rgba(0,0,0,0.6);
+    }
+    ::-webkit-scrollbar-thumb:hover{ background: rgba(var(--base-accent-rgb) / 0.55); }
+
+    /* ===== Team theming ===== */
+    .team{
+      --accent: var(--base-accent);
+      --accent-rgb: var(--base-accent-rgb);
+    }
+
+    /* Заголовки/акценты секции */
+    .team .team-accent{ color: var(--accent); }
+    .team .team-glow{ text-shadow: 0 0 16px rgba(var(--accent-rgb) / 0.6); }
+    .team .team-line{
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(var(--accent-rgb) / 0.45);
+    }
+
+    /* Ник игрока: по умолчанию белый, цвет только при hover карточки */
+    .team .player-name{
+      color: #ffffff;
+      text-shadow: none;
+      transition: color .35s ease, text-shadow .35s ease;
+    }
+    .team .player-card:hover .player-name{
+      color: var(--accent);
+      text-shadow: 0 0 14px rgba(var(--accent-rgb) / 0.35);
+    }
+
+    /* Значения статов всегда в цвет команды (можешь сделать тоже hover, если захочешь) */
+    .team .stat-value{
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    /* Hover карточек — всегда цвет команды */
+    .team .player-card:hover{
+      border-color: rgba(var(--accent-rgb) / 0.45);
+      box-shadow: 0 0 28px rgba(var(--accent-rgb) / 0.14);
+      transform: translateY(-2px);
+    }
+
+    /* Captain */
+    .team .captain-ring{
+      box-shadow: 0 0 22px rgba(var(--accent-rgb) / 0.18);
+      border: 1px solid rgba(var(--accent-rgb) / 0.22);
+    }
+    .team .badge-captain{
+      background: var(--accent);
+      color: #000;
+      box-shadow: 0 0 18px rgba(var(--accent-rgb) / 0.5);
+    }
+
+    /* Role bar + text */
+    .team .role-bar{
+      background: linear-gradient(to top, rgba(0,0,0,0.88), rgba(0,0,0,0));
+    }
+    .team .role-text{
+      color: var(--accent);
+      letter-spacing: .18em;
+    }
+
+    /* ===== Team colors ===== */
+    .PV  { --accent:#38bdf8; --accent-rgb:56 189 248; }     /* Pepevision */
+    .KPM { --accent:#f97316; --accent-rgb:249 115 22; }
+    .LZM { --accent:#ffff00; --accent-rgb:255 255 0; }
+    .CZ9 { --accent:#ff0000; --accent-rgb:255 0 0; }
+    .LST { --accent:#B5B8B1; --accent-rgb:181 184 177; }
+    .LMK { --accent:#52cc00; --accent-rgb:82 204 0; }
+    .BLZ { --accent:#8b00ff; --accent-rgb:139 0 255; }
+  </style>
+</head>
+
+<body class="bg-black text-white font-sans min-h-screen">
+
+  <!-- TOURNAMENT HEADER -->
+  <header class="text-center py-16 bg-gradient-to-b from-blue-900/20 to-transparent">
+    <h1 class="text-6xl font-black tracking-tighter animate__animated animate__fadeInDown blue-glow">
+      SG <span class="text-sky-400">TOURNAMENT #2</span>
+    </h1>
+    <div class="h-1 w-28 bg-sky-500 mx-auto mt-4 rounded-full animate__animated animate__zoomIn"></div>
+    <p class="mt-4 text-blue-200/50 uppercase tracking-[0.3em] text-[10px] animate__animated animate__fadeIn animate__delay-1s">
+      CS2 Teams Hub • 8 Squads • 3 Players Each
+    </p>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 pb-16 space-y-16">
+
+    <!-- ===== TEAM 01: PEPEVISION ===== -->
+    <section class="team PV">
+      <div class="text-center mb-8">
+        <p class="text-sky-300/60 uppercase tracking-[0.45em] text-[10px]">Team 01 • Squad</p>
+        <h2 class="mt-3 text-5xl font-black tracking-tighter team-glow">
+          PEPE<span class="team-accent">VISION</span>
+        </h2>
+        <div class="h-1 w-24 team-line mx-auto mt-4 rounded-full"></div>
+        <p class="mt-4 text-blue-200/45 uppercase tracking-[0.28em] text-[10px]">Rising Stars Division</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Mexanik -->
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478419410728386560/Picsart_26-03-03_20-49-38-952.png?ex=69a854df&is=69a7035f&hm=c162e1a135ee9007c89c82f630a051a98fa6930ca79594c577af9c9ddaa00488&"
+                 alt="Mexanik" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Entry Fragger</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Mexanik</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">1.21</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">600+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">M4A1-S</span></div>
+          </div>
+        </div>
+
+        <!-- ImNotDima -->
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-1s captain-ring">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478419412020367442/Picsart_26-03-03_20-49-03-305.png?ex=69a854df&is=69a7035f&hm=672bad059e02b2899dbea230efbd2cab2dcece5b103347594e3e842ddd2ff482&"
+                 alt="ImNotDima" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute top-4 right-4 badge-captain text-[10px] px-2 py-1 rounded font-black uppercase">Captain</div>
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Support / IGL</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">ImNotDima</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">1.06</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">893+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">M4A1-S</span></div>
+          </div>
+        </div>
+
+        <!-- S1MP1K -->
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-2s">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478419409252122877/Picsart_26-03-03_20-49-50-851.png?ex=69a854de&is=69a7035e&hm=339e30a2eeb09b7d692f8e2f9f2d83e62d0f21edf841e5026cec3bd1c40b320c&"
+                 alt="S1MP1K" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Sniper</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">S1MP1K</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">1.64</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">755+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AWP</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TEAM 02: KPM ===== -->
+    <section class="team KPM">
+      <div class="text-center mb-8">
+        <p class="uppercase tracking-[0.45em] text-[10px] opacity-70 team-accent">Team 02 • Squad</p>
+        <h2 class="mt-3 text-5xl font-black tracking-tighter team-glow">
+          KP<span class="team-accent">M</span>
+        </h2>
+        <div class="h-1 w-24 team-line mx-auto mt-4 rounded-full"></div>
+        <p class="mt-4 uppercase tracking-[0.28em] text-[10px] text-white/35">Rising Stars Division</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478465818126844109/Picsart_26-03-03_23-52-14-013.png?ex=69a88017&is=69a72e97&hm=227e90b1e5e944e6c3a3d42d1f1afb8de9799f4beb881980eec5bac705ff02d4&"
+                 alt="Mexa" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Support</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Mexa</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">0.89</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">250+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">M4A1-S</span></div>
+          </div>
+        </div>
+
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-1s captain-ring">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478455846857080865/Picsart_26-03-03_23-12-43-960.png?ex=69a876ce&is=69a7254e&hm=e7a41b4800080c15ba03f518d70813078c19c6bad898c9c1ce7df95efd9e1904&"
+                 alt="Klat4er" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute top-4 right-4 badge-captain text-[10px] px-2 py-1 rounded font-black uppercase">Captain</div>
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Entry Fragger / IGL</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Klat4er</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">1.86</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">2000+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AK-47</span></div>
+          </div>
+        </div>
+
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-2s">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478451466992615736/Picsart_26-02-25_02-38-09-282.png?ex=69a872ba&is=69a7213a&hm=5aa244050dc90917266ddceb936b5cb4dbe0f091c8ed5e59151337d5afcdc7dc&"
+                 alt="Penne" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Support</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Penne</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">0.97</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">860+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">M4A1-S</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TEAM 03: LazzyTEAM ===== -->
+    <section class="team LZM">
+      <div class="text-center mb-8">
+        <p class="uppercase tracking-[0.45em] text-[10px] opacity-70 team-accent">Team 03 • Squad</p>
+        <h2 class="mt-3 text-5xl font-black tracking-tighter team-glow">
+          Lazzy<span class="team-accent">TEAM</span>
+        </h2>
+        <div class="h-1 w-24 team-line mx-auto mt-4 rounded-full"></div>
+        <p class="mt-4 uppercase tracking-[0.28em] text-[10px] text-white/35">Rising Stars Division</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Takumi -->
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478455857682452483/Picsart_26-03-03_23-11-08-300.png?ex=69a876d0&is=69a72550&hm=4506f693c4fbed6dc5750c5d3dda6f5df42401d1ff34047df9df97cb6245e689&"
+                 alt="Takumi" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Entry Fragger</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Takumi</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">1.79</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">2000+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AK-47</span></div>
+          </div>
+        </div>
+
+        <!-- Patoshka -->
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-1s captain-ring">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478451468251168829/Picsart_26-02-25_02-10-17-470.png?ex=69a872ba&is=69a7213a&hm=6b6c4f3e48eebab34286ea434b12512a91c7258816112851e4aee9ab977c6281&"
+                 alt="Patoshka" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute top-4 right-4 badge-captain text-[10px] px-2 py-1 rounded font-black uppercase">Captain</div>
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">AWP / IGL</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Patoshka</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">1.46</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">1850+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AWP</span></div>
+          </div>
+        </div>
+
+        <!-- Megaglist -->
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-2s">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478468211350573140/Picsart_26-02-25_02-44-44-204.png?ex=69a88252&is=69a730d2&hm=ad43397dc4e1d4f1f07ecf6e005c9ea7807e53d4ba29b471cc8fbbf6f32feb0e&"
+                 alt="Megaglist" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Support</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Megaglist</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">0.58</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">217+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AK-47</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TEAM 04: CZ9 ===== -->
+    <section class="team CZ9">
+      <div class="text-center mb-8">
+        <p class="uppercase tracking-[0.45em] text-[10px] opacity-70 team-accent">Team 04 • Squad</p>
+        <h2 class="mt-3 text-5xl font-black tracking-tighter team-glow">
+          CZ<span class="team-accent">9</span>
+        </h2>
+        <div class="h-1 w-24 team-line mx-auto mt-4 rounded-full"></div>
+        <p class="mt-4 uppercase tracking-[0.28em] text-[10px] text-white/35">Rising Stars Division</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478455856105525311/Picsart_26-03-03_23-10-10-290.png?ex=69a876d0&is=69a72550&hm=5470ee507c7e2b7141f2a91255fe22422b4a660440ed178fe18be06043be68a0&"
+                 alt="Bulava" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Support</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Bulava</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">0.41</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">250+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AK-47</span></div>
+          </div>
+        </div>
+
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-1s captain-ring">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478455859175755898/Picsart_26-03-03_23-11-24-709.png?ex=69a876d1&is=69a72551&hm=258a8c825e9acdbcc9934b12565d10dfa15182230273ba38fee01050af7fb793&"
+                 alt="Crazy_crib" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute top-4 right-4 badge-captain text-[10px] px-2 py-1 rounded font-black uppercase">Captain</div>
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Entry Fragger / IGL</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Crazy_crib</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">1.49</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">705+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AK-47</span></div>
+          </div>
+        </div>
+
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-2s">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478465814368882768/Picsart_26-03-03_23-53-43-395.png?ex=69a88016&is=69a72e96&hm=6163b46e01e6fce650c31e8197a554e4dba58e7f258138ba6a8c86517aca0166&"
+                 alt="quzzix" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Entry Fragger</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">quzzix</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">1.32</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">1000+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AK-47</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TEAM 05: LossTEAM ===== -->
+    <section class="team LST bg-zinc-950/20 p-8 rounded-3xl">
+      <div class="text-center mb-8">
+        <p class="uppercase tracking-[0.45em] text-[10px] opacity-70 team-accent">Team 05 • Squad</p>
+        <h2 class="mt-3 text-5xl font-black tracking-tighter team-glow">
+          Loss<span class="team-accent">TEAM</span>
+        </h2>
+        <div class="h-1 w-24 team-line mx-auto mt-4 rounded-full"></div>
+        <p class="mt-4 uppercase tracking-[0.28em] text-[10px] text-white/35">Rising Stars Division</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478455845498126540/Picsart_26-03-03_23-13-05-367.png?ex=69a876cd&is=69a7254d&hm=ba9a78e6b08fb1e37593c60653d3add29248ed02e3b295ce71e2fed31eaa6029&"
+                 alt="Anton" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Support</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Anton</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">0.58</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">380+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">MP9</span></div>
+          </div>
+        </div>
+
+        <div class="player-card bg-zinc-900/60 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-1s captain-ring">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478451469400408135/Picsart_26-02-26_12-15-50-450.png?ex=69a872ba&is=69a7213a&hm=06206019303a86c55393ab68fd58b7ee6f13dd8f6174fd9ce04cce3f799f6e18&"
+                 alt="Loss" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute top-4 right-4 badge-captain text-[10px] px-3 py-1 rounded-full font-black uppercase tracking-tight">Captain</div>
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Entry Fragger / IGL</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Loss</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value text-lg">1.58</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">1000+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AK-47</span></div>
+          </div>
+        </div>
+
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-2s">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478455844223057982/Picsart_26-03-03_23-13-45-662.png?ex=69a876cd&is=69a7254d&hm=bd9089c0b8057130c357b0f6c15d40053880266b47f48a4b180cb20eb6ef683d&"
+                 alt="han4k" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Sniper</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">han4k</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">1.05</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">590+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AWP</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TEAM 06: ZuubTEAM (оставил красную тему как CZ9) ===== -->
+    <section class="team CZ9">
+      <div class="text-center mb-8">
+        <p class="uppercase tracking-[0.45em] text-[10px] opacity-70 team-accent">Team 06 • Squad</p>
+        <h2 class="mt-3 text-5xl font-black tracking-tighter team-glow">
+          Zuub<span class="team-accent">TEAM</span>
+        </h2>
+        <div class="h-1 w-24 team-line mx-auto mt-4 rounded-full"></div>
+        <p class="mt-4 uppercase tracking-[0.28em] text-[10px] text-white/35">Rising Stars Division</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Abs_meow -->
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478465813374570706/Picsart_26-03-03_23-54-03-553.png?ex=69a88016&is=69a72e96&hm=0374b35f2bbe3c933037f3de41fc6bebd084227052dbdeac617fabe846c952c3&"
+                 alt="Abs_meow" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">AWP</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Abs_meow</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">0.69</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">590+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AWP</span></div>
+          </div>
+        </div>
+
+        <!-- CEMEN -->
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-1s captain-ring">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478455848077627463/Picsart_26-03-03_23-12-08-014.png?ex=69a876ce&is=69a7254e&hm=bf1779b4087a5d90dfd3761285ed3fefa7a9f262b5da50399ea21cc80a190311&"
+                 alt="CEMEN" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute top-4 right-4 badge-captain text-[10px] px-2 py-1 rounded font-black uppercase">Captain</div>
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Entry Fragger / IGL</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">CEMEN</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">1.07</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">300+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">MP7</span></div>
+          </div>
+        </div>
+
+        <!-- Strew -->
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-2s">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478465813374570706/Picsart_26-03-03_23-54-03-553.png?ex=69a88016&is=69a72e96&hm=0374b35f2bbe3c933037f3de41fc6bebd084227052dbdeac617fabe846c952c3&"
+                 alt="Strew" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Lurker</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Strew</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">0.85</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">160+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AWP</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TEAM 07: LMK ===== -->
+    <section class="team LMK">
+      <div class="text-center mb-8">
+        <p class="uppercase tracking-[0.45em] text-[10px] opacity-70 team-accent">Team 07 • Squad</p>
+        <h2 class="mt-3 text-5xl font-black tracking-tighter team-glow">
+          LM<span class="team-accent">K</span>
+        </h2>
+        <div class="h-1 w-24 team-line mx-auto mt-4 rounded-full"></div>
+        <p class="mt-4 uppercase tracking-[0.28em] text-[10px] text-white/35">Rising Stars Division</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478465815526244463/Picsart_26-03-03_23-52-57-024.png?ex=69a88016&is=69a72e96&hm=495d2c964d2d42fc6fe3573d6fddcc05c5debfe0b5811ec4a9490de8d39283cb&"
+                 alt="Zero" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Support</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Zero</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">0.61</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">350+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AK-47</span></div>
+          </div>
+        </div>
+
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-1s captain-ring">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478455849201565736/Picsart_26-03-03_23-11-46-033.png?ex=69a876ce&is=69a7254e&hm=79e62d997753c5292d41354a35d16baff2751149d5fd7761f64224cf2c3edd61&"
+                 alt="Lam4uk" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute top-4 right-4 badge-captain text-[10px] px-2 py-1 rounded font-black uppercase">Captain</div>
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Entry Fragger / IGL</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Lam4uk</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">1.23</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">300+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">Desert Eagle</span></div>
+          </div>
+        </div>
+
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-2s">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478465816860295350/Picsart_26-03-03_23-52-35-653.png?ex=69a88017&is=69a72e97&hm=7d2f1f010ccb5dd18146a4ba5c60481504129204627727d9e1f4148e19781eff&"
+                 alt="ds_swanson" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Sniper</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">ds_swanson</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">0.81</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">770+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AWP</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TEAM 08: BLEZE ===== -->
+    <section class="team BLZ">
+      <div class="text-center mb-8">
+        <p class="uppercase tracking-[0.45em] text-[10px] opacity-70 team-accent">Team 08 • Squad</p>
+        <h2 class="mt-3 text-5xl font-black tracking-tighter team-glow">
+          BL<span class="team-accent">EZE</span>
+        </h2>
+        <div class="h-1 w-24 team-line mx-auto mt-4 rounded-full"></div>
+        <p class="mt-4 uppercase tracking-[0.28em] text-[10px] text-white/35">Rising Stars Division</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478465812192034826/Picsart_26-03-03_23-54-23-307.png?ex=69a88016&is=69a72e96&hm=f33b90ac223e4acc125e728e3c7cda4fac0b475a74c4b44cbb28ba7d92802823&"
+                 alt="FEBET" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Entry Fragger</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">FEBET</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">1.08</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">500+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AK-47</span></div>
+          </div>
+        </div>
+
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-1s captain-ring">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478465812192034826/Picsart_26-03-03_23-54-23-307.png?ex=69a88016&is=69a72e96&hm=f33b90ac223e4acc125e728e3c7cda4fac0b475a74c4b44cbb28ba7d92802823&"
+                 alt="BLESSED" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute top-4 right-4 badge-captain text-[10px] px-2 py-1 rounded font-black uppercase" style="color:#fff;">Captain</div>
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Entry Fragger / IGL</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">BLESSED</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">1.15</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">625+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AK-47</span></div>
+          </div>
+        </div>
+
+        <div class="player-card bg-zinc-900/40 rounded-3xl p-6 group animate__animated animate__fadeInUp animate__delay-2s">
+          <div class="relative overflow-hidden rounded-2xl mb-6">
+            <img src="https://cdn.discordapp.com/attachments/1114206876620574840/1478708493891534918/Picsart_26-03-04_15-58-04-913.png?ex=69a9621a&is=69a8109a&hm=2df0a7dacd092bc19209546d5610e5608ea5d42bc5b825ff81847a4db8eb5c30&"
+                 alt="Danya Ed" class="w-full h-72 object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute bottom-0 left-0 right-0 role-bar p-4">
+              <span class="text-[10px] font-black uppercase role-text">Entry Fragger</span>
+            </div>
+          </div>
+          <h3 class="player-name text-3xl font-black mb-4 tracking-tight">Danya Ed</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Rating 2.0</span><span class="font-mono stat-value">1.05</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Playtime</span><span class="text-gray-200">425+ hrs</span></div>
+            <div class="flex justify-between stat-badge"><span class="text-gray-400">Signature</span><span class="text-gray-200 uppercase font-semibold">AK-47</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="text-center py-12 mt-10 border-t border-white/5 text-gray-600 text-[10px] tracking-[0.4em] uppercase">
+    © 2026 SG TOURNAMENT #2<span class="mx-3 opacity-20">|</span> CS2 TEAMS HUB
+  </footer>
+
+</body>
+</html>
