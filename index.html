@@ -7,18 +7,21 @@
 
   <link rel="icon" href="https://cdn.discordapp.com/attachments/900998594583207957/1478761428453425162/Picsart_26-03-04_19-29-44-302.png?ex=69a99366&is=69a841e6&hm=04ebd55ae03061aecc8b4f502b9f2e27ca9cc0c0b36a897c0a9a0577cb196d1d&" type="image/png">
   <script>
-  let pass;
-  
-  while(pass !== "314"){
-    pass = prompt("Введите пароль");
-    if(pass === null){
-      document.body.innerHTML = "Access denied";
-      break;
-    }
-  }
-  
-  if(pass === "314"){
-    localStorage.setItem("sg_auth", "true");
+  // если уже вошёл — ничего не спрашиваем
+  if (localStorage.getItem("sg_auth") === "true") {
+    // просто даём открыть index как обычно, или можешь сам перейти в live по кнопке
+  } else {
+    const pass = prompt("Введите пароль");
+
+    if (pass === "314") {
+      localStorage.setItem("sg_auth", "true");
+    } else {
+      // Нажал "Отмена" или ввёл неверно — блокируем страницу
+      document.addEventListener("DOMContentLoaded", () => {
+        document.body.innerHTML =
+          "<div style='min-height:100vh;display:flex;align-items:center;justify-content:center;background:#000;color:#fff;font:700 22px Arial;'>Access denied</div>";
+        });
+      }
   }
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
