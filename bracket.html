@@ -325,8 +325,8 @@
 
   <main class="max-w-[1500px] mx-auto px-6 pb-16 space-y-8">
     <div class="flex flex-wrap items-center gap-3 justify-center">
-      <span class="legend-pill">Upper Bracket</span>
-      <span class="legend-pill">Lower Bracket</span>
+      <span class="legend-pill">Верхняя Сетка</span>
+      <span class="legend-pill">Нижняя Сетка</span>
     </div>
 
     <div class="note-box max-w-5xl mx-auto animate__animated animate__fadeInUp">
@@ -336,10 +336,10 @@
     <section class="section-shell p-6 md:p-8 animate__animated animate__fadeInUp">
       <div class="flex items-center justify-between gap-4 mb-6 flex-wrap">
         <div>
-          <p class="text-white/45 uppercase tracking-[0.35em] text-[10px]">Stage A</p>
-          <h2 class="text-3xl md:text-4xl font-black tracking-tight mt-2">Upper Bracket</h2>
+          <p class="text-white/45 uppercase tracking-[0.35em] text-[10px]">Стадия A</p>
+          <h2 class="text-3xl md:text-4xl font-black tracking-tight mt-2">Верхняя Сетка</h2>
         </div>
-        <div class="text-white/35 uppercase tracking-[0.24em] text-[10px]">4 rounds</div>
+        <div class="text-white/35 uppercase tracking-[0.24em] text-[10px]">4 раунда</div>
       </div>
 
       <div class="bracket-scroll">
@@ -350,10 +350,10 @@
     <section class="section-shell p-6 md:p-8 animate__animated animate__fadeInUp">
       <div class="flex items-center justify-between gap-4 mb-6 flex-wrap">
         <div>
-          <p class="text-white/45 uppercase tracking-[0.35em] text-[10px]">Stage B</p>
-          <h2 class="text-3xl md:text-4xl font-black tracking-tight mt-2">Lower Bracket</h2>
+          <p class="text-white/45 uppercase tracking-[0.35em] text-[10px]">Стадия B</p>
+          <h2 class="text-3xl md:text-4xl font-black tracking-tight mt-2">Нижняя Сетка</h2>
         </div>
-        <div class="text-white/35 uppercase tracking-[0.24em] text-[10px]">4 rounds</div>
+        <div class="text-white/35 uppercase tracking-[0.24em] text-[10px]">4 раунда</div>
       </div>
 
       <div class="bracket-scroll">
@@ -364,7 +364,7 @@
       </main>
 
   <footer class="text-center py-12 mt-10 border-t border-white/5 text-gray-600 text-[10px] tracking-[0.4em] uppercase">
-    © 2026 SG TOURNAMENT #2<span class="mx-3 opacity-20">|</span> BRACKET
+    © 2026 SG TOURNAMENT #2<span class="mx-3 opacity-20">|</span> СЕТКА
   </footer>
 
   <script>
@@ -388,19 +388,19 @@
       {
         title: 'Round 1',
         matches: [
-          { stage:'1', date:'02 Mar', status:'finished', meta:'Ancient (B)', teams:[
+          { stage:'1', date:'02 Mar', status:'Завершён', meta:'Ancient (B)', teams:[
             {name:'KPM', score:'13', win:true},
             {name:'LossTeam', score:'6'}
           ]},
-          { stage:'2', date:'01 Mar', status:'finished', meta:'Mirage', teams:[
+          { stage:'2', date:'01 Mar', status:'Завершён', meta:'Mirage', teams:[
             {name:'LazzyTeam', score:'13', win:true},
             {name:'CZ9', score:'7'}
           ]},
-          { stage:'3', date:'02 Mar', status:'finished', meta:'Vertigo (A)', teams:[
+          { stage:'3', date:'02 Mar', status:'Завершён', meta:'Vertigo (A)', teams:[
             {name:'LMK', score:'13', win:true},
             {name:'PEPEVISION', score:'4'}
           ]},
-          { stage:'4', date:'01 Mar', status:'finished', meta:'Inferno', teams:[
+          { stage:'4', date:'01 Mar', status:'Завершён', meta:'Inferno', teams:[
             {name:'BLEZE', score:'13', win:true},
             {name:'ZuubTeam', score:'5'}
           ]}
@@ -409,11 +409,11 @@
       {
         title: 'Round 2',
         matches: [
-          { stage:'1', date:'05 Mar', status:'finished', meta:'Ancient (B)', teams:[
+          { stage:'1', date:'05 Mar', status:'Завершён', meta:'Ancient (B)', teams:[
             {name:'KPM', score:'22', win:true},
             {name:'LazzyTEAM', score:'20'}
           ]},
-          { stage:'2', date:'04 Mar', status:'finished', meta:'Anubis (B)', teams:[
+          { stage:'2', date:'04 Mar', status:'Завершён', meta:'Anubis (B)', teams:[
             {name:'PEPEVISION', score:'13', win: true},
             {name:'BLEZE', score:'6'}
           ]}
@@ -422,22 +422,22 @@
       {
         title: 'Round 3',
         matches: [
-          { stage:'Semifinal', date:'05 Mar', status:'TBD', meta:'???', teams:[
+          { stage:'Полуфинал', date:'09 Mar', status:'Предстоящий', meta:'???', teams:[
             {name:'KPM', score:'', win:true},
-            {name:'TBD 2', score:''}
+            {name:'LazzyTeam', score:''}
           ]},
-          { stage:'THIRD PLACE', date:'TBD', status:'TBD', meta:'???', teams:[
+          { stage:'3 Место', date:'TBD', status:'TBD', meta:'???', teams:[
             {name:'TBD', score:'', win:true},
             {name:'TBD', score:''}
           ]},
-          { stage:'Semifinal', date:'TBD', status:'TBD', meta:'???', teams:[
+          { stage:'Полуфинал', date:'TBD', status:'TBD', meta:'???', teams:[
             {name:'PEPEVISION', score:''},
             {name:'TBD 1', score:''}
           ]}
         ]
       },
       {
-        title: 'Final',
+        title: 'Финал',
         matches: [
           { stage:'GRAND FINAL', date:'TBD', status:'empty', meta:'', teams:[
             {name:'TBD', score:''},
@@ -449,39 +449,39 @@
 
     const lowerRounds = [
       {
-        title: 'Round 1',
+        title: 'Раунд 1',
         matches: [
-          { stage:'1 & 4', date:'05 Mar', status:'finished', meta:'Anubis', teams:[
+          { stage:'1 & 4', date:'05 Mar', status:'Завершён', meta:'Anubis', teams:[
             {name:'LossTeam', score:'13', win:true},
             {name:'ZuubTeam', score:'3'}
           ]},
-          { stage:'2 & 3', date:'05 Mar', status:'finished', meta:'Nuke (A)', teams:[
+          { stage:'2 & 3', date:'05 Mar', status:'Завершён', meta:'Nuke (A)', teams:[
             {name:'CZ9', score:'16', win:true},
             {name:'LMK', score:'14'}
           ]}
         ]
       },
       {
-        title: 'Round 2',
+        title: 'Раунд 2',
         matches: [
-          { stage:'FROM 2', date:'08 Mar', status:'upcoming', meta:'???', teams:[
+          { stage:'ИЗ 2', date:'10 Mar', status:'Предстоящий', meta:'???', teams:[
             {name:'BLEZE', score:''},
             {name:'LossTeam', score:''}
           ]},
-          { stage:'FROM 1', date:'08 Mar', status:'upcoming', meta:'???', teams:[
-            {name:'CZ9', score:'', win:true},
-            {name:'LazzyTeam', score:''}
+          { stage:'ИЗ 1', date:'08 Mar', status:'Завершён', meta:'Mirage', teams:[
+            {name:'CZ9', score:'10', win:true},
+            {name:'LazzyTeam', score:'13'}
           ]}
         ]
       },
       {
-        title: 'Round 3',
+        title: 'Раунд 3',
         matches: [
-          { stage:'WINNER', date:'', status:'empty', meta:'UP to 1', teams:[
+          { stage:'Победитель', date:'', status:'empty', meta:'Вверх в 1', teams:[
             {name:'TBD', score:''},
           ]},
-          { stage:'WINNER', date:'', status:'empty', meta:'UP to 2', teams:[
-            {name:'TBD', score:''},
+          { stage:'Победитель', date:'', status:'empty', meta:'Вверх в 2', teams:[
+            {name:'LazzyTeam', score:''},
           ]}
         ]
       }
