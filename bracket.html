@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SG TOURNAMENT #2 | BRACKET</title>
+
+  <link rel="icon" href="https://cdn.discordapp.com/attachments/900998594583207957/1478761428453425162/Picsart_26-03-04_19-29-44-302.png?ex=69a99366&is=69a841e6&hm=04ebd55ae03061aecc8b4f502b9f2e27ca9cc0c0b36a897c0a9a0577cb196d1d&" type="image/png">
+  <script>
+    if(localStorage.getItem("sg_auth") !== "true"){
+      window.location.href = "index.html";
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <style>
+    :root{
+      --base-accent:#38bdf8;
+      --base-accent-rgb:56 189 248;
+    }
+
+    body{
+      background: radial-gradient(circle at top center, #0a192f 0%, #000000 100%);
+      background-attachment: fixed;
+    }
+
+    .top-nav{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(0,0,0,0.35);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-link{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+      transition: transform .25s ease, background .25s ease, border-color .25s ease;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: 11px;
+      color: rgba(255,255,255,0.85);
+    }
+    .nav-link:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.14);
+    }
+    .nav-link.active{
+      border-color: rgba(56,189,248,0.45);
+      box-shadow: 0 0 18px rgba(56,189,248,0.12);
+      background: rgba(56,189,248,0.08);
+      color: #fff;
+    }
+    .live-dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #ff2d2d;
+      box-shadow: 0 0 12px rgba(255,45,45,0.55);
+      position: relative;
+      flex: 0 0 auto;
+    }
+    .live-dot::after{
+      content:"";
+      position:absolute;
+      inset:-7px;
+      border-radius:999px;
+      border:1px solid rgba(255,45,45,0.45);
+      animation: pulse 1.5s ease-out infinite;
+    }
+    @keyframes pulse{
+      0%{ transform: scale(0.65); opacity: .9; }
+      100%{ transform: scale(1.3); opacity: 0; }
+    }
+
+    .blue-glow{ text-shadow: 0 0 18px rgba(56,189,248,0.45); }
+
+    .section-shell{
+      border: 1px solid rgba(255,255,255,0.06);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
+      box-shadow: 0 16px 60px rgba(0,0,0,0.25);
+    }
+
+    .round-col{
+      min-width: 260px;
+      position: relative;
+    }
+
+    .round-title{
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .28em;
+      color: rgba(255,255,255,0.42);
+      margin-bottom: 18px;
+      padding-left: 8px;
+    }
+
+    .match-stack{
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .match-card{
+      position: relative;
+      border-radius: 22px;
+      background: rgba(12,12,16,0.74);
+      border: 1px solid rgba(255,255,255,0.07);
+      overflow: hidden;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.22);
+    }
+
+    .match-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    }
+
+    .meta-pill{
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: rgba(255,255,255,0.56);
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .status-finished{ color:#86efac; }
+    .status-upcoming{ color:#facc15; }
+    .status-empty{ color:rgba(255,255,255,0.34); }
+
+    .team-row{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      align-items:center;
+      gap:12px;
+      padding: 13px 16px;
+      border-left: 3px solid transparent;
+    }
+    .team-row + .team-row{
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .team-row.win{
+      background: rgba(255,255,255,0.02);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.025);
+    }
+
+    .team-tag{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .team-dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      flex: 0 0 auto;
+      box-shadow: 0 0 14px currentColor;
+    }
+    .team-name{
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: .01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .team-score{
+      font-size: 22px;
+      font-weight: 900;
+      color: #fff;
+      opacity: .95;
+      min-width: 28px;
+      text-align: right;
+    }
+    .team-placeholder .team-name,
+    .team-placeholder .team-score{
+      color: rgba(255,255,255,0.35);
+    }
+
+    .connector{
+      display:none;
+    }
+
+    .legend-pill{
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .note-box{
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+      padding: 16px 18px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.55;
+    }
+#upperBracket .round-1 .match-stack{
+  gap: 22px;
+}
+
+#upperBracket .round-2 .match-stack{
+  gap: 250px;
+  margin-top: 135px;
+}
+
+#upperBracket .round-3 .match-stack{
+  gap: 18px;
+  margin-top: 135px;
+}
+
+#upperBracket .round-4 .match-stack{
+  gap: 0;
+  margin-top: 370px;
+}
+
+#lowerBracket .round-1 .match-stack{
+  gap: 22px;
+  margin-top: 80px;
+}
+
+#lowerBracket .round-2 .match-stack{
+  gap: 150px;
+}
+
+#lowerBracket .round-3 .match-stack{
+  gap: 300px;
+}
+
+
+    .PV  { color:#38bdf8; }
+    .KPM { color:#f97316; }
+    .LZM { color:#ffff00; }
+    .CZ9 { color:#ff0000; }
+    .LST { color:#B5B8B1; }
+    .LMK { color:#52cc00; }
+    .BLZ { color:#8b00ff; }
+    .ZUB { color:#ff4d4d; }
+    .TBD { color:#94a3b8; }
+
+    ::-webkit-scrollbar{ height: 10px; width:10px; }
+    ::-webkit-scrollbar-track{ background: rgba(255,255,255,0.03); }
+    ::-webkit-scrollbar-thumb{
+      background: rgba(56,189,248,0.30);
+      border-radius: 999px;
+      border: 2px solid rgba(0,0,0,0.6);
+    }
+    ::-webkit-scrollbar-thumb:hover{ background: rgba(56,189,248,0.50); }
+
+    @media (min-width: 1100px){
+      .bracket-scroll{
+        overflow-x:auto;
+        padding-bottom: 6px;
+      }
+      .round-grid{
+        display:grid;
+        grid-template-columns: repeat(4, 320px);
+        gap: 26px;
+        align-items:start;
+      }
+      .round-col::after{
+        content:"";
+        position:absolute;
+        top: 110px;
+        right: -13px;
+        width: 13px;
+        height: 2px;
+        background: linear-gradient(90deg, rgba(255,255,255,0.18), rgba(255,255,255,0.05));
+      }
+      .round-col:last-child::after{ display:none; }
+    }
+  </style>
+</head>
+<body class="text-white font-sans min-h-screen">
+
+  <div class="top-nav">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="text-white/80 font-black tracking-[0.22em] text-[10px] uppercase">SG Tournament</span>
+        <span class="opacity-20">|</span>
+        <span class="text-white/55 text-[10px] uppercase tracking-[0.22em]">Hub</span>
+      </div>
+
+      <nav class="flex items-center gap-3 flex-wrap justify-end">
+        <a class="nav-link" href="index.html">Teams</a>
+        <a class="nav-link" href="live.html"><span class="live-dot" aria-hidden="true"></span>LIVE</a>
+        <a class="nav-link active" href="bracket.html" aria-current="page">Bracket</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="text-center py-16 bg-gradient-to-b from-sky-900/20 to-transparent">
+    <p class="text-sky-300/55 uppercase tracking-[0.42em] text-[10px] animate__animated animate__fadeIn">SG TOURNAMENT #2</p>
+    <h1 class="mt-3 text-5xl md:text-6xl font-black tracking-tighter animate__animated animate__fadeInDown blue-glow">
+      TOURNAMENT <span class="text-sky-400">BRACKET</span>
+    </h1>
+    <div class="h-1 w-28 bg-sky-500 mx-auto mt-4 rounded-full animate__animated animate__zoomIn"></div>
+    <p class="mt-4 text-white/50 uppercase tracking-[0.28em] text-[10px] animate__animated animate__fadeIn animate__delay-1s">
+      SIMPLE AND NICE
+    </p>
+  </header>
+
+  <main class="max-w-[1500px] mx-auto px-6 pb-16 space-y-8">
+    <div class="flex flex-wrap items-center gap-3 justify-center">
+      <span class="legend-pill">Upper Bracket</span>
+      <span class="legend-pill">Lower Bracket</span>
+    </div>
+
+    <div class="note-box max-w-5xl mx-auto animate__animated animate__fadeInUp">
+      В верхней сетке все команды начинают турнир с первого раунда. Победители матчей проходят дальше по верхней части сетки, а проигравшие не вылетают сразу, а переходят в нижнюю сетку. В нижней сетке команды получают второй шанс: там они играют между собой, и после каждого поражения уже окончательно выбывают из турнира. Победители нижней сетки затем поднимаются выше и встречаются с командами, которые проиграли в верхней сетке на более поздних этапах. В итоге одна команда выходит из верхней сетки, одна — из нижней, после чего они играют решающий финальный матч за победу в турнире.
+    </div>
+
+    <section class="section-shell p-6 md:p-8 animate__animated animate__fadeInUp">
+      <div class="flex items-center justify-between gap-4 mb-6 flex-wrap">
+        <div>
+          <p class="text-white/45 uppercase tracking-[0.35em] text-[10px]">Stage A</p>
+          <h2 class="text-3xl md:text-4xl font-black tracking-tight mt-2">Upper Bracket</h2>
+        </div>
+        <div class="text-white/35 uppercase tracking-[0.24em] text-[10px]">4 rounds</div>
+      </div>
+
+      <div class="bracket-scroll">
+        <div id="upperBracket" class="round-grid"></div>
+      </div>
+    </section>
+
+    <section class="section-shell p-6 md:p-8 animate__animated animate__fadeInUp">
+      <div class="flex items-center justify-between gap-4 mb-6 flex-wrap">
+        <div>
+          <p class="text-white/45 uppercase tracking-[0.35em] text-[10px]">Stage B</p>
+          <h2 class="text-3xl md:text-4xl font-black tracking-tight mt-2">Lower Bracket</h2>
+        </div>
+        <div class="text-white/35 uppercase tracking-[0.24em] text-[10px]">4 rounds</div>
+      </div>
+
+      <div class="bracket-scroll">
+        <div id="lowerBracket" class="round-grid"></div>
+      </div>
+    </section>
+
+      </main>
+
+  <footer class="text-center py-12 mt-10 border-t border-white/5 text-gray-600 text-[10px] tracking-[0.4em] uppercase">
+    © 2026 SG TOURNAMENT #2<span class="mx-3 opacity-20">|</span> BRACKET
+  </footer>
+
+  <script>
+    const teamStyles = {
+      'PEPEVISION': 'PV',
+      'KPM': 'KPM',
+      'LazzyTEAM': 'LZM',
+      'LazzyTeam': 'LZM',
+      'CZ9': 'CZ9',
+      'LossTeam': 'LST',
+      'LossTEAM': 'LST',
+      'LMK': 'LMK',
+      'BLEZE': 'BLZ',
+      'ZuubTeam': 'ZUB',
+      'TBD': 'TBD',
+      'TBD 1': 'TBD',
+      'TBD 2': 'TBD'
+    };
+
+    const upperRounds = [
+      {
+        title: 'Round 1',
+        matches: [
+          { stage:'1', date:'02 Mar', status:'finished', meta:'Ancient (B)', teams:[
+            {name:'KPM', score:'13', win:true},
+            {name:'LossTeam', score:'6'}
+          ]},
+          { stage:'2', date:'01 Mar', status:'finished', meta:'Mirage', teams:[
+            {name:'LazzyTeam', score:'13', win:true},
+            {name:'CZ9', score:'7'}
+          ]},
+          { stage:'3', date:'02 Mar', status:'finished', meta:'Vertigo (A)', teams:[
+            {name:'LMK', score:'13', win:true},
+            {name:'PEPEVISION', score:'4'}
+          ]},
+          { stage:'4', date:'01 Mar', status:'finished', meta:'Inferno', teams:[
+            {name:'BLEZE', score:'13', win:true},
+            {name:'ZuubTeam', score:'5'}
+          ]}
+        ]
+      },
+      {
+        title: 'Round 2',
+        matches: [
+          { stage:'1', date:'05 Mar', status:'finished', meta:'Ancient (B)', teams:[
+            {name:'KPM', score:'22', win:true},
+            {name:'LazzyTEAM', score:'20'}
+          ]},
+          { stage:'2', date:'04 Mar', status:'finished', meta:'Anubis (B)', teams:[
+            {name:'PEPEVISION', score:'13', win: true},
+            {name:'BLEZE', score:'6'}
+          ]}
+        ]
+      },
+      {
+        title: 'Round 3',
+        matches: [
+          { stage:'Semifinal', date:'05 Mar', status:'TBD', meta:'???', teams:[
+            {name:'KPM', score:'', win:true},
+            {name:'TBD 2', score:''}
+          ]},
+          { stage:'THIRD PLACE', date:'TBD', status:'TBD', meta:'???', teams:[
+            {name:'TBD', score:'', win:true},
+            {name:'TBD', score:''}
+          ]},
+          { stage:'Semifinal', date:'TBD', status:'TBD', meta:'???', teams:[
+            {name:'PEPEVISION', score:''},
+            {name:'TBD 1', score:''}
+          ]}
+        ]
+      },
+      {
+        title: 'Final',
+        matches: [
+          { stage:'GRAND FINAL', date:'TBD', status:'empty', meta:'', teams:[
+            {name:'TBD', score:''},
+            {name:'TBD', score:''}
+          ]}
+        ]
+      }
+    ];
+
+    const lowerRounds = [
+      {
+        title: 'Round 1',
+        matches: [
+          { stage:'1 & 4', date:'05 Mar', status:'finished', meta:'Anubis', teams:[
+            {name:'LossTeam', score:'13', win:true},
+            {name:'ZuubTeam', score:'3'}
+          ]},
+          { stage:'2 & 3', date:'05 Mar', status:'finished', meta:'Nuke (A)', teams:[
+            {name:'CZ9', score:'16', win:true},
+            {name:'LMK', score:'14'}
+          ]}
+        ]
+      },
+      {
+        title: 'Round 2',
+        matches: [
+          { stage:'FROM 2', date:'08 Mar', status:'upcoming', meta:'???', teams:[
+            {name:'BLEZE', score:''},
+            {name:'LossTeam', score:''}
+          ]},
+          { stage:'FROM 1', date:'08 Mar', status:'upcoming', meta:'???', teams:[
+            {name:'CZ9', score:'', win:true},
+            {name:'LazzyTeam', score:''}
+          ]}
+        ]
+      },
+      {
+        title: 'Round 3',
+        matches: [
+          { stage:'WINNER', date:'', status:'empty', meta:'UP to 1', teams:[
+            {name:'TBD', score:''},
+          ]},
+          { stage:'WINNER', date:'', status:'empty', meta:'UP to 2', teams:[
+            {name:'TBD', score:''},
+          ]}
+        ]
+      }
+   ];
+
+    
+    function esc(str=''){
+      return String(str)
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;');
+    }
+
+    function statusClass(status){
+      if(status === 'finished') return 'status-finished';
+      if(status === 'upcoming') return 'status-upcoming';
+      return 'status-empty';
+    }
+
+    function statusLabel(status){
+      if(status === 'finished') return 'Finished';
+      if(status === 'upcoming') return 'Upcoming';
+      return 'TBD';
+    }
+
+    function renderMatch(match){
+
+  const s1 = Number(match.teams[0]?.score);
+  const s2 = Number(match.teams[1]?.score);
+
+  const rows = match.teams.map((team, index) => {
+
+    const style = teamStyles[team.name] || 'TBD';
+    const isPlaceholder = team.name === 'TBD';
+
+    let scoreClass = '';
+
+    if (!isNaN(s1) && !isNaN(s2)) {
+      if (index === 0) {
+        scoreClass = s1 > s2 ? 'text-green-400' : 'text-red-400';
+      } else {
+        scoreClass = s2 > s1 ? 'text-green-400' : 'text-red-400';
+      }
+    }
+
+    return `
+      <div class="team-row ${team.win ? 'win' : ''} ${isPlaceholder ? 'team-placeholder' : ''}" style="border-left-color: currentColor;" >
+        <div class="team-tag ${style}">
+          <span class="team-dot"></span>
+          <span class="team-name">${esc(team.name)}</span>
+        </div>
+        <div class="team-score ${scoreClass}">
+          ${esc(team.score || '—')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <article class="match-card">
+      <div class="match-head">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="meta-pill">${esc(match.stage)}</span>
+          <span class="meta-pill">${esc(match.meta)}</span>
+        </div>
+        <div class="text-[11px] uppercase tracking-[0.20em] ${statusClass(match.status)}">${statusLabel(match.status)}</div>
+      </div>
+      ${rows}
+      <div class="px-4 py-3 text-[10px] uppercase tracking-[0.20em] text-white/38 border-t border-white/5">${esc(match.date)}</div>
+    </article>
+  `;
+}
+
+    function renderRounds(targetId, rounds){
+  const root = document.getElementById(targetId);
+  root.innerHTML = rounds.map((round, index) => `
+    <div class="round-col round-${index + 1}">
+      <div class="round-title">${esc(round.title)}</div>
+      <div class="match-stack">
+        ${round.matches.map(renderMatch).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+    
+    renderRounds('upperBracket', upperRounds);
+    renderRounds('lowerBracket', lowerRounds);
+  </script>
+</body>
+</html>
