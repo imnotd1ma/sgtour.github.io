@@ -274,80 +274,86 @@
 
 
   <script>
-    const tg = window.Telegram.WebApp
+    const tg = window.Telegram?.WebApp
+
+    if (!tg) {
+      alert("Telegram WebApp не найден")
+    }
 
     tg.expand()
 
-    const user = tg.initDataUnsafe.user
+    const user = tg?.initDataUnsafe?.user
 
 
 
     async function sendPrediction() {
 
-    const scoreA = parseInt(document.getElementById("scoreA").value)
-    const scoreB = parseInt(document.getElementById("scoreB").value)
+      const scoreA = parseInt(document.getElementById("scoreA").value)
+      const scoreB = parseInt(document.getElementById("scoreB").value)
 
-    if (isNaN(scoreA) || isNaN(scoreB)) {
-      alert("Введите счёт")
-      return
-    }
+      if (isNaN(scoreA) || isNaN(scoreB)) {
+        alert("Введите счёт")
+        return
+      }
 
-    // допустимые значения
-    if (scoreA < 0 || scoreA > 2 || scoreB < 0 || scoreB > 2) {
-      alert("Можно вводить только 0, 1 или 2")
-      return
-    }
+      if (scoreA < 0 || scoreA > 2 || scoreB < 0 || scoreB > 2) {
+        alert("Можно вводить только 0, 1 или 2")
+        return
+      }
 
-    // проверка Bo3 (обязательно у одной команды 2)
-    if (scoreA !== 2 && scoreB !== 2) {
-      alert("В финале Bo3 одна из команд должна иметь 2 победы")
-      return
-    }
+      if (scoreA !== 2 && scoreB !== 2) {
+        alert("В финале Bo3 одна из команд должна иметь 2 победы")
+        return
+      }
 
-    // нельзя 2:2
-    if (scoreA === 2 && scoreB === 2) {
-      alert("Счёт 2:2 невозможен в Bo3")
-      return
-    }
+      if (scoreA === 2 && scoreB === 2) {
+        alert("Счёт 2:2 невозможен")
+        return
+      }
 
-    const data = {
+      try {
 
-      telegram_id: user.id,
+        if (!user) {
+          alert("Telegram user не найден")
+          return
+        }
 
-      username: user.username || user.first_name,
+        const data = {
+          telegram_id: user.id,
+          username: user.username || user.first_name,
+          name: user.first_name + " " + (user.last_name || ""),
+          scoreA: scoreA,
+          scoreB: scoreB
+        }
 
-      name: user.first_name + " " + (user.last_name || ""),
+        console.log("Отправка:", data)
 
-      scoreA: scoreA,
+        const res = await fetch("https://script.google.com/macros/s/AKfycbyf6_2Rc4zIAtq7bdshfXFYkgxHG8hg4D6TcuZXIXbhkr1HALtygT0blrlFeBys_YXiXA/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        })
 
-      scoreB: scoreB
+        const result = await res.json()
 
-    }
+        console.log("Ответ сервера:", result)
 
-    const res = await fetch("https://script.google.com/macros/s/AKfycbyf6_2Rc4zIAtq7bdshfXFYkgxHG8hg4D6TcuZXIXbhkr1HALtygT0blrlFeBys_YXiXA/exec", {
+        if (result.status === "already") {
+          alert("Вы уже отправили предикт!")
+          return
+        }
 
-      method: "POST",
+        addPredictionRow(data)
 
-      headers: {
-        "Content-Type": "application/json"
-      },
+        alert("Prediction submitted!")
 
-      body: JSON.stringify(data)
+      } catch (error) {
 
-    })
+        console.error(error)
 
-    const result = await res.json()
+        alert("Ошибка отправки предикта")
 
-    if (result.status === "already") {
-
-      alert("Вы уже отправили предикт!")
-      return
-
-    }
-
-    addPredictionRow(data)
-
-    alert("Prediction submitted!")
+      }
 
     }
 
