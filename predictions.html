@@ -328,13 +328,20 @@
 
         console.log("Отправка:", data)
 
-        const res = await fetch("https://script.google.com/macros/s/AKfycbwWMqGO_QMQOQjAThprDRpKekW8X79jGwHEMvuD8VDcALozEQrMz4vkNrNPgnMnXHiaqw/exec", {
+        const res = await fetch("https://script.google.com/macros/s/AKfycbyf6_2Rc4zIAtq7bdshfXFYkgxHG8hg4D6TcuZXIXbhkr1HALtygT0blrlFeBys_YXiXA/exec", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
         })
 
-        const result = await res.json()
+        const text = await res.text()
+
+        let result = {}
+
+        try {
+          result = JSON.parse(text)
+        } catch {
+          console.log("Ответ сервера:", text)
+        }
 
         console.log("Ответ сервера:", result)
 
