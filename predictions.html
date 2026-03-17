@@ -1,75 +1,70 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
-
 <head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>SG TOURNAMENT #2 | PREDICTIONS</title>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
   <link rel="icon" href="https://cdn.discordapp.com/attachments/900998594583207957/1478761428453425162/Picsart_26-03-04_19-29-44-302.png">
-
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
   <style>
-    :root {
-      --base-accent: #38bdf8;
+    :root{
+      --base-accent:#38bdf8;
+      --base-accent-rgb:56 189 248;
+      --surface:#171d2d;
+      --surface-2:#20283a;
+      --surface-3:#0f1522;
+      --line:rgba(255,255,255,0.08);
     }
 
-    body {
-      background: radial-gradient(circle at top center, #0a192f 0%, #000000 100%);
+    body{
+      background:
+        linear-gradient(180deg, rgba(5,10,18,0.30), rgba(3,5,10,0.92)),
+        radial-gradient(circle at top center, #10203d 0%, #05070d 62%, #000 100%);
       background-attachment: fixed;
     }
 
-    .top-nav {
+    .top-nav{
       position: sticky;
       top: 0;
+      z-index: 50;
       backdrop-filter: blur(14px);
-      background: rgba(0, 0, 0, 0.35);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0,0,0,0.34);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    .nav-link {
+    .nav-link{
       display: inline-flex;
       align-items: center;
       gap: 10px;
       padding: 10px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+      transition: transform .25s ease, background .25s ease, border-color .25s ease;
       font-weight: 800;
       letter-spacing: .08em;
       text-transform: uppercase;
       font-size: 11px;
+      color: rgba(255,255,255,0.85);
     }
 
-    .nav-link.active {
-      border-color: rgba(255, 45, 45, 0.55);
-      background: rgba(255, 45, 45, 0.08);
+    .nav-link:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.14);
     }
 
-    .card {
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      background: rgba(24, 24, 27, 0.35);
-      border-radius: 24px;
+    .nav-link.active{
+      border-color: rgba(56,189,248,0.45);
+      box-shadow: 0 0 18px rgba(56,189,248,0.12);
+      background: rgba(56,189,248,0.08);
+      color: #fff;
     }
 
-    .pill {
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 11px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
     .live-dot{
       width: 10px;
       height: 10px;
@@ -79,6 +74,7 @@
       position: relative;
       flex: 0 0 auto;
     }
+
     .live-dot::after{
       content:"";
       position:absolute;
@@ -87,15 +83,335 @@
       border:1px solid rgba(255,45,45,0.45);
       animation: pulse 1.5s ease-out infinite;
     }
-  </style>
 
+    @keyframes pulse{
+      0%{ transform: scale(0.65); opacity: .9; }
+      100%{ transform: scale(1.3); opacity: 0; }
+    }
+
+    .blue-glow{
+      text-shadow: 0 0 18px rgba(56,189,248,0.45);
+    }
+
+    .hero-card{
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background:
+        linear-gradient(180deg, rgba(11,19,34,0.72), rgba(11,16,26,0.94)),
+        url('images/takumi.png') center/cover;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.28);
+    }
+
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(9,14,24,0.42), rgba(7,10,18,0.88));
+    }
+
+    .hero-card > *{
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-shell{
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      backdrop-filter: blur(12px);
+      border-radius: 30px;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.24);
+    }
+
+    .predict-card{
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: linear-gradient(180deg, rgba(33,41,60,0.98), rgba(23,29,45,0.98));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02), 0 18px 60px rgba(0,0,0,0.24);
+    }
+
+    .predict-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: radial-gradient(circle at top center, rgba(56,189,248,0.08), transparent 55%);
+      pointer-events:none;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.74);
+    }
+
+    .team-logo{
+      width: 120px;
+      height: 84px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(10,16,24,0.92), rgba(19,29,42,0.92));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03), 0 10px 20px rgba(0,0,0,0.28);
+    }
+
+    .team-logo.pv{
+      color:#38bdf8;
+      text-shadow: 0 0 18px rgba(56,189,248,0.35);
+    }
+
+    .team-logo.lz{
+      color:#facc15;
+      text-shadow: 0 0 18px rgba(250,204,21,0.28);
+    }
+
+    .score-slot{
+      width: 84px;
+      height: 64px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(8,12,20,0.34);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color: rgba(255,255,255,0.22);
+      font-size: 30px;
+      font-weight: 900;
+    }
+
+    .divider-row{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      color: rgba(255,255,255,0.40);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .divider-row::before,
+    .divider-row::after{
+      content:"";
+      flex:1 1 auto;
+      height:1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    }
+
+    .action-btn{
+      width:100%;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(12,18,28,0.42);
+      color: rgba(255,255,255,0.86);
+      font-size: 19px;
+      font-weight: 900;
+      padding: 16px 18px;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+
+    .action-btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.14);
+      background: rgba(16,23,34,0.72);
+    }
+
+    .action-btn.active{
+      border-color: rgba(56,189,248,0.38);
+      background: rgba(56,189,248,0.12);
+      box-shadow: 0 0 24px rgba(56,189,248,0.10);
+      color: #fff;
+    }
+
+    .score-btn{
+      width:100%;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(11,16,24,0.44);
+      padding: 14px 12px;
+      font-size: 24px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.88);
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .score-btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.14);
+    }
+
+    .score-btn.active{
+      border-color: rgba(56,189,248,0.38);
+      background: rgba(56,189,248,0.12);
+      color: #fff;
+    }
+
+    .select-shell{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      width:100%;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(13,19,29,0.44);
+      padding: 16px 18px;
+      color: rgba(255,255,255,0.84);
+      font-weight: 800;
+    }
+
+    .player-grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .player-picker{
+      display:none;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(9,14,22,0.92);
+      padding: 14px;
+    }
+
+    .player-picker.open{
+      display:block;
+      animation: fadeIn .18s ease;
+    }
+
+    @keyframes fadeIn{
+      from{ opacity:0; transform: translateY(-4px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+
+    .player-btn{
+      width:100%;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(10,15,24,0.44);
+      color: rgba(255,255,255,0.84);
+      font-size: 15px;
+      font-weight: 800;
+      padding: 14px 14px;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .player-btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.14);
+    }
+
+    .player-btn.active{
+      border-color: rgba(56,189,248,0.38);
+      background: rgba(56,189,248,0.12);
+      color: #fff;
+    }
+
+    .plus-btn{
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 20px;
+      line-height: 1;
+      color: rgba(255,255,255,0.86);
+      flex: 0 0 auto;
+    }
+
+    .plus-btn.active{
+      border-color: rgba(56,189,248,0.38);
+      background: rgba(56,189,248,0.12);
+      color: #fff;
+    }
+
+    .submit-btn{
+      width:100%;
+      border-radius: 18px;
+      border: 1px solid rgba(56,189,248,0.18);
+      background: linear-gradient(180deg, rgba(17,27,42,0.95), rgba(11,17,26,0.95));
+      color: #fff;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 18px 20px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .submit-btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(56,189,248,0.36);
+      background: linear-gradient(180deg, rgba(24,37,58,0.95), rgba(14,21,32,0.95));
+    }
+
+    .submit-btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+      transform:none;
+    }
+
+    .community-row{
+      display:grid;
+      grid-template-columns: minmax(120px, 1fr) minmax(150px, 1fr) minmax(120px, 1fr);
+      gap: 14px;
+      padding: 14px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.82);
+    }
+
+    ::-webkit-scrollbar{ height: 10px; width:10px; }
+    ::-webkit-scrollbar-track{ background: rgba(255,255,255,0.03); }
+    ::-webkit-scrollbar-thumb{
+      background: rgba(56,189,248,0.30);
+      border-radius: 999px;
+      border: 2px solid rgba(0,0,0,0.6);
+    }
+    ::-webkit-scrollbar-thumb:hover{ background: rgba(56,189,248,0.50); }
+
+    @media (max-width: 768px){
+      .team-logo{
+        width: 92px;
+        height: 64px;
+      }
+
+      .score-slot{
+        width: 64px;
+        height: 52px;
+        font-size: 24px;
+      }
+
+      .community-row{
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .player-grid{
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
-
 <body class="text-white font-sans min-h-screen">
-
-  <!-- NAV -->
-
   <div class="top-nav">
     <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -103,286 +419,286 @@
         <span class="opacity-20">|</span>
         <span class="text-white/55 text-[10px] uppercase tracking-[0.22em]">Hub</span>
       </div>
-      <nav class="flex gap-3">
+
+      <nav class="flex items-center gap-3 flex-wrap justify-end">
         <a class="nav-link" href="index.html">Teams</a>
         <a class="nav-link" href="live.html"><span class="live-dot" aria-hidden="true"></span>LIVE</a>
-        <a class="nav-link" href="bracket.html" aria-current="page">Bracket</a>
-        <a class="nav-link active" href="predictions.html">Predictions</a>
-
+        <a class="nav-link" href="bracket.html">Bracket</a>
+        <a class="nav-link active" href="predictions.html" aria-current="page">Predictions</a>
       </nav>
-
     </div>
-
   </div>
 
+  <header class="max-w-6xl mx-auto px-6 pt-10">
+    <div class="hero-card p-8 md:p-12 animate__animated animate__fadeIn">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="inline-flex items-center gap-3 pill mb-5">
+          <span class="text-2xl leading-none">●</span>
+          Prediction League
+        </div>
 
-  <!-- HEADER -->
+        <h1 class="text-5xl md:text-6xl font-black tracking-tighter blue-glow animate__animated animate__fadeInDown">
+          MATCH <span class="text-sky-400">PREDICTIONS</span>
+        </h1>
 
-  <header class="text-center py-14">
-
-    <h1 class="text-5xl font-black tracking-tight animate__animated animate__fadeInDown">
-
-      FINAL <span class="text-red-400">PREDICTION</span>
-
-    </h1>
-
-    <p class="mt-4 text-white/40 uppercase tracking-[0.28em] text-[10px]">
-
-      Predict the score of the final match
-
-    </p>
-
+        <p class="mt-6 text-white/72 text-lg md:text-2xl leading-relaxed">
+          Собери идеальный прогноз на главный матч турнира. Выбери победителя, итоговый счёт BO3 и игрока, который сделает больше всех киллов.
+        </p>
+      </div>
+    </div>
   </header>
 
+  <main class="max-w-6xl mx-auto px-6 pb-16 pt-8 space-y-8">
+    <section class="feature-shell p-5 md:p-7 animate__animated animate__fadeInUp">
+      <div class="predict-card p-5 md:p-6">
+        <div class="flex flex-col gap-5">
+          <div class="flex items-center justify-between gap-4 flex-wrap">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="pill">BO3</span>
+              <span class="pill">FINAL</span>
+              <span class="pill">15 Mar 2026</span>
+            </div>
+            <div class="text-sky-300 text-[11px] uppercase tracking-[0.22em] font-black">
+              Prediction Card
+            </div>
+          </div>
 
+          <div class="grid md:grid-cols-[1fr_auto_1fr] items-center gap-5">
+            <div class="text-center">
+              <div class="team-logo pv mx-auto">PV</div>
+              <div class="mt-4 text-2xl font-black">PEPEVISION</div>
+              <div class="mt-2 text-sm text-white/60">Текущий фаворит сообщества</div>
+            </div>
 
-  <main class="max-w-4xl mx-auto px-6 pb-16 space-y-8">
+            <div class="flex items-center gap-3 justify-center">
+              <div class="score-slot" id="previewScoreA">-</div>
+              <div class="text-white/20 text-4xl font-black">:</div>
+              <div class="score-slot" id="previewScoreB">-</div>
+            </div>
 
+            <div class="text-center">
+              <div class="team-logo lz mx-auto">LZ</div>
+              <div class="mt-4 text-2xl font-black">LZM</div>
+              <div class="mt-2 text-sm text-white/60">Победитель верхней части сетки</div>
+            </div>
+          </div>
 
-    <!-- MATCH CARD -->
+          <div class="divider-row">Кто победит матч?</div>
 
-    <div class="card p-8 animate__animated animate__fadeInUp">
+          <div class="grid md:grid-cols-2 gap-4">
+            <button id="teamAButton" type="button" class="action-btn">PEPEVISION</button>
+            <button id="teamBButton" type="button" class="action-btn">LZM</button>
+          </div>
 
-      <div class="flex justify-between mb-6">
+          <div class="divider-row">Итоговый счёт выбранной команды в BO3</div>
 
-        <div class="flex gap-2">
+          <div class="grid md:grid-cols-2 gap-4">
+            <button id="score20Button" type="button" class="score-btn">2:0</button>
+            <button id="score21Button" type="button" class="score-btn">2:1</button>
+          </div>
 
-          <span class="pill">Bo3</span>
+          <div class="divider-row">Кто сделает больше всего киллов?</div>
 
-          <span class="pill">FINAL</span>
+          <div class="select-shell">
+            <span id="playerPlaceholder">Нажми на плюс, чтобы выбрать игрока</span>
+            <button id="playerToggleButton" type="button" class="plus-btn">+</button>
+          </div>
 
-          <span class="pill">15 Mar 2026</span>
+          <div id="playerPicker" class="player-picker">
+            <div id="playerGrid" class="player-grid">
+              <button type="button" class="player-btn" data-player="Mexanik">Mexanik</button>
+              <button type="button" class="player-btn" data-player="imnotdima">imnotdima</button>
+              <button type="button" class="player-btn" data-player="s1mp1k">s1mp1k</button>
+              <button type="button" class="player-btn" data-player="Takumi">Takumi</button>
+              <button type="button" class="player-btn" data-player="Patoshka">Patoshka</button>
+              <button type="button" class="player-btn" data-player="Megaglist">Megaglist</button>
+            </div>
+          </div>
 
+          <div class="feature-shell p-4 text-center text-white/55 text-sm">
+            После отправки прогноз попадёт в общую таблицу. Один Telegram ID = один основной прогноз.
+          </div>
+
+          <button id="submitPredictionButton" type="button" class="submit-btn" onclick="sendPrediction()">
+            Submit Prediction
+          </button>
         </div>
+      </div>
+    </section>
 
-        <div class="text-yellow-400 text-[11px] uppercase tracking-[0.2em]">
-
-          Prediction
-
+    <section class="feature-shell p-5 md:p-7 animate__animated animate__fadeInUp">
+      <div class="flex items-center justify-between gap-4 flex-wrap">
+        <div>
+          <p class="text-sky-300/55 uppercase tracking-[0.35em] text-[10px]">Community</p>
+          <h2 class="mt-2 text-3xl md:text-4xl font-black tracking-tight">Последние прогнозы</h2>
         </div>
-
+        <span class="pill">Live table</span>
       </div>
 
-
-      <div class="grid md:grid-cols-3 items-center gap-4">
-
-
-        <div class="text-center md:text-left">
-
-          <div class="text-white/60 text-[10px] uppercase tracking-[0.26em]">
-
-            Team A
-
-          </div>
-
-          <div class="text-3xl font-black mt-1">
-
-            PEPEVISION
-
-          </div>
-
-          <input id="scoreA" type="number" min="0" max="3" class="mt-3 w-20 text-center bg-black/40 border border-white/10 rounded p-2" />
-
-        </div>
-
-
-
-        <div class="text-center">
-
-          <div class="text-white/40 text-[11px] uppercase tracking-[0.26em] mb-2">
-
-            Score
-
-          </div>
-
-          <div class="text-4xl font-black">
-
-            :
-
-          </div>
-
-        </div>
-
-
-
-        <div class="text-center md:text-right">
-
-          <div class="text-white/60 text-[10px] uppercase tracking-[0.26em]">
-
-            Team B
-
-          </div>
-
-          <div class="text-3xl font-black mt-1">
-
-            LazzyTeam
-
-          </div>
-
-          <input id="scoreB" type="number" min="0" max="3" class="mt-3 w-20 text-center bg-black/40 border border-white/10 rounded p-2" />
-
-        </div>
-
+      <div class="mt-6 text-white/45 uppercase tracking-[0.18em] text-[11px] community-row border-t-0 pt-0">
+        <div>User</div>
+        <div>Prediction</div>
+        <div>Top Fragger</div>
       </div>
 
-
-
-      <button onclick="sendPrediction()" class="mt-8 w-full bg-red-600 hover:bg-red-700 p-3 rounded-xl font-bold uppercase tracking-wider">
-
-        Submit prediction
-
-      </button>
-
-    </div>
-
-
-
-    <!-- COMMUNITY TABLE -->
-
-    <div class="card p-6">
-
-      <h2 class="text-xl font-bold mb-4">
-
-        Community predictions
-
-      </h2>
-
-      <table class="w-full">
-
-        <thead class="text-white/50 text-sm">
-
-          <tr>
-
-            <th class="text-left p-2">User</th>
-
-            <th class="text-left p-2">Prediction</th>
-
-          </tr>
-
-        </thead>
-
-        <tbody id="predictionsTable">
-
-        </tbody>
-
-      </table>
-
-    </div>
-
+      <div id="predictionsTable"></div>
+    </section>
   </main>
 
-
-
   <script>
-    const tg = window.Telegram?.WebApp
+    const tg = window.Telegram?.WebApp;
 
-    if (!tg) {
-      alert("Telegram WebApp не найден")
+    if (tg) {
+      tg.expand();
     }
 
-    tg.expand()
+    const user = tg?.initDataUnsafe?.user;
+    let selectedWinner = "";
+    let selectedScore = "";
+    let selectedPlayer = "";
 
-    const user = tg?.initDataUnsafe?.user
+    const playerPlaceholder = document.getElementById("playerPlaceholder");
+    const playerPicker = document.getElementById("playerPicker");
+    const playerToggleButton = document.getElementById("playerToggleButton");
+    const playerButtons = Array.from(document.querySelectorAll("[data-player]"));
+    const teamAButton = document.getElementById("teamAButton");
+    const teamBButton = document.getElementById("teamBButton");
+    const score20Button = document.getElementById("score20Button");
+    const score21Button = document.getElementById("score21Button");
+    const previewScoreA = document.getElementById("previewScoreA");
+    const previewScoreB = document.getElementById("previewScoreB");
 
+    playerToggleButton.addEventListener("click", () => {
+      playerPicker.classList.toggle("open");
+      playerToggleButton.classList.toggle("active");
+    });
 
+    playerButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        selectedPlayer = button.dataset.player;
+        playerPlaceholder.textContent = selectedPlayer;
+        playerButtons.forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        playerPicker.classList.remove("open");
+        playerToggleButton.classList.remove("active");
+      });
+    });
+
+    teamAButton.addEventListener("click", () => {
+      selectedWinner = "PEPEVISION";
+      teamAButton.classList.add("active");
+      teamBButton.classList.remove("active");
+      refreshScorePreview();
+    });
+
+    teamBButton.addEventListener("click", () => {
+      selectedWinner = "LZM";
+      teamBButton.classList.add("active");
+      teamAButton.classList.remove("active");
+      refreshScorePreview();
+    });
+
+    score20Button.addEventListener("click", () => {
+      selectedScore = "2:0";
+      score20Button.classList.add("active");
+      score21Button.classList.remove("active");
+      refreshScorePreview();
+    });
+
+    score21Button.addEventListener("click", () => {
+      selectedScore = "2:1";
+      score21Button.classList.add("active");
+      score20Button.classList.remove("active");
+      refreshScorePreview();
+    });
+
+    function refreshScorePreview() {
+      if (!selectedWinner || !selectedScore) {
+        previewScoreA.textContent = "-";
+        previewScoreB.textContent = "-";
+        return;
+      }
+
+      const [winnerScore, loserScore] = selectedScore.split(":");
+
+      if (selectedWinner === "PEPEVISION") {
+        previewScoreA.textContent = winnerScore;
+        previewScoreB.textContent = loserScore;
+      } else {
+        previewScoreA.textContent = loserScore;
+        previewScoreB.textContent = winnerScore;
+      }
+    }
 
     async function sendPrediction() {
-
-      const scoreA = parseInt(document.getElementById("scoreA").value)
-      const scoreB = parseInt(document.getElementById("scoreB").value)
-
-      if (isNaN(scoreA) || isNaN(scoreB)) {
-        alert("Введите счёт")
-        return
+      if (!selectedWinner) {
+        alert("Выбери победителя матча");
+        return;
       }
 
-      if (scoreA < 0 || scoreA > 2 || scoreB < 0 || scoreB > 2) {
-        alert("Можно вводить только 0, 1 или 2")
-        return
+      if (!selectedScore) {
+        alert("Выбери итоговый счёт BO3");
+        return;
       }
 
-      if (scoreA !== 2 && scoreB !== 2) {
-        alert("В финале Bo3 одна из команд должна иметь 2 победы")
-        return
+      if (!selectedPlayer) {
+        alert("Выбери игрока с самым большим количеством киллов");
+        return;
       }
 
-      if (scoreA === 2 && scoreB === 2) {
-        alert("Счёт 2:2 невозможен")
-        return
+      if (!user) {
+        alert("Telegram user не найден");
+        return;
       }
+
+      const data = {
+        telegram_id: user.id,
+        username: user.username || user.first_name,
+        name: `${user.first_name || ""} ${user.last_name || ""}`.trim(),
+        winner: selectedWinner,
+        score: selectedScore,
+        top_fragger: selectedPlayer
+      };
 
       try {
-
-        if (!user) {
-          alert("Telegram user не найден")
-          return
-        }
-
-        const data = {
-          telegram_id: user.id,
-          username: user.username || user.first_name,
-          name: user.first_name + " " + (user.last_name || ""),
-          scoreA: scoreA,
-          scoreB: scoreB
-        }
-
-        console.log("Отправка:", data)
-
         const res = await fetch("https://script.google.com/macros/s/AKfycbwWMqGO_QMQOQjAThprDRpKekW8X79jGwHEMvuD8VDcALozEQrMz4vkNrNPgnMnXHiaqw/exec", {
           method: "POST",
           body: JSON.stringify(data)
-        })
+        });
 
-        const text = await res.text()
-
-        let result = {}
+        const text = await res.text();
+        let result = {};
 
         try {
-          result = JSON.parse(text)
+          result = JSON.parse(text);
         } catch {
-          console.log("Ответ сервера:", text)
+          console.log(text);
         }
-
-        console.log("Ответ сервера:", result)
 
         if (result.status === "already") {
-          alert("Вы уже отправили предикт!")
-          return
+          alert("Ты уже отправлял предикт");
+          return;
         }
 
-        addPredictionRow(data)
-
-        alert("Prediction submitted!")
-
+        addPredictionRow(data);
+        alert("Prediction submitted!");
       } catch (error) {
-
-        console.error(error)
-
-        alert("Ошибка: " + error)
-
+        console.error(error);
+        alert("Ошибка: " + error);
       }
-
     }
-
-
 
     function addPredictionRow(data) {
-
-      const row = document.createElement("tr")
-
+      const row = document.createElement("div");
+      row.className = "community-row";
       row.innerHTML = `
-
-<td class="p-2 border-t border-white/10">${data.username}</td>
-
-<td class="p-2 border-t border-white/10">${data.scoreA} : ${data.scoreB}</td>
-
-`
-
-      document.getElementById("predictionsTable").appendChild(row)
-
+        <div class="font-bold">${data.username || data.name}</div>
+        <div>${data.winner} • ${data.score}</div>
+        <div>${data.top_fragger}</div>
+      `;
+      document.getElementById("predictionsTable").prepend(row);
     }
   </script>
-
 </body>
+</html>
 
-</html>>
